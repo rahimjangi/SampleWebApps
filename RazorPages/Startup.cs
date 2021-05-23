@@ -1,3 +1,5 @@
+using DataLibrary.Data;
+using DataLibrary.Db;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,17 +15,28 @@ namespace RazorPages
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSingleton(new ConnectionStringData
+            {
+                SqlConnectionStringName = "Default"
+            });
+
+            services.AddSingleton<IDataAccess, SqlDb>();
+            services.AddSingleton<IFoodData, FoodData>();
+            services.AddSingleton<IOrderData, OrderData>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +59,7 @@ namespace RazorPages
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

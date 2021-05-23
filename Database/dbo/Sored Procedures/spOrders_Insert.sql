@@ -9,7 +9,7 @@
 AS
 BEGIN
 	set nocount on;
-	insert into dbo.[Order]([OrderName], [OrderDate], [FoodId], [Quantity], [Total])
+	insert into [dbo].[Order](OrderName, OrderDate, FoodId, Quantity, Total)
 	values(@OrderName,@OrderDate,@FoodId,@Quantity,@Total)
 	set @Id= SCOPE_IDENTITY();
 	

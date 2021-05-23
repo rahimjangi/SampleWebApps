@@ -34,7 +34,8 @@ namespace DataLibrary.Db
 
         public async Task<int> SaveData<U>(string storedProdecure, U parameters, string connectionStringName)
         {
-            using (IDbConnection connection = new SqlConnection(connectionStringName))
+            string connectionString = _config.GetConnectionString(connectionStringName);
+            using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 return await connection.ExecuteAsync(storedProdecure,
                                                      parameters,
