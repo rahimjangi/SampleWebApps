@@ -1,0 +1,25 @@
+﻿@page
+@model RazorPages.Pages.Food.ListModel
+@{
+}
+<h2>List of food</h2>
+<table class="table table-striped">
+    <thead class="=thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Food)
+        {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Description</td>
+            <td>@string.Format("{0:C}", item.Price)</td>
+        </tr>
+        }
+    </tbody>
+</table>

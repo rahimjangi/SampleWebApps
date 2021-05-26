@@ -1,0 +1,34 @@
+﻿@page
+@model RazorPages.Pages.Orders.DeleteModel
+@{
+}
+
+
+<div class="container">
+    @if (Model.Order == null)
+    {
+        <h1>The requested order is not valid!</h1>
+    }
+    else
+    {
+        <h4>Are you sure you want to delete this order?</h4>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Order.OrderName" class="control-label"></label>
+        <input class="form-control" type="text" asp-for="Order.OrderName" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Order.Quantity" class="control-label"></label>
+        <input class="form-control" type="text" asp-for="Order.Quantity" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Order.OrderDate" class="control-label"></label>
+        <input class="form-control" type="text" asp-for="Order.OrderDate" value="@string.Format("{0:ddd, MMM d, yyyy}",Model.Order.OrderDate)" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </div>
+</form>
+    }
+</div>
