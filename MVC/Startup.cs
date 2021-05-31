@@ -1,3 +1,5 @@
+using DataLibrary.Data;
+using DataLibrary.Db;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +27,13 @@ namespace MVC
         {
             services.AddControllersWithViews();
 
+            //Dependency injection for DATABASE ACCESS
+            services.AddSingleton(new ConnectionStringData {
+                SqlConnectionStringName="Default"
+            });
+            services.AddSingleton<IDataAccess, SqlDb>();
+            services.AddSingleton<IFoodData, FoodData>();
+            services.AddSingleton<IOrderData, OrderData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +58,6 @@ namespace MVC
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
